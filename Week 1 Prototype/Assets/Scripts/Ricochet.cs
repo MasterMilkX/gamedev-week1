@@ -18,7 +18,7 @@ public class Ricochet : MonoBehaviour
     
     void Update(){
         if(game_over && Input.GetKeyDown("r")){
-        	rb.AddForce(new Vector2(10, 10));
+        	rb.AddForce(new Vector2(10*Random.Range(0.1f,1.0f), 10*Random.Range(0.1f,1.0f)));
         	game_over = false;
         	Debug.Log("here we go!");
         }
@@ -32,10 +32,18 @@ public class Ricochet : MonoBehaviour
     			rb.velocity *= new Vector2(speedModifier,speedModifier);
     			speedModifier *= 1.05f;
     			hitCt = 0;
+    			Debug.Log("speed up!");
     		}else{
     			hitCt += 1;
     		}
     		
+    		//make sure all axis are not 0
+    		if(rb.velocity.x == 0.0f){
+    			rb.velocity = new Vector2(2.0f,rb.velocity.y);
+    		}
+    		if(rb.velocity.y == 0.0f){
+    			rb.velocity = new Vector2(rb.velocity.x,2.0f);
+    		}
     	}
     	//game over if the ball hits the blue circle while visible
     	else if(c.gameObject.name == "blue_circle"){
