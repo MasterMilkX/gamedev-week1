@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 313611289}
   - component: {fileID: 313611288}
   m_Layer: 0
-  m_Name: black_square (1)
+  m_Name: HWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 933905103}
   - component: {fileID: 933905102}
   - component: {fileID: 933905101}
+  - component: {fileID: 933905104}
   m_Layer: 0
   m_Name: blue_circle
   m_TagString: Untagged
@@ -406,7 +407,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933905100}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -480,6 +481,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &933905104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933905100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390c55e97e1ea1a47a0e43caab04745a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &938976291
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +505,7 @@ GameObject:
   - component: {fileID: 938976294}
   - component: {fileID: 938976293}
   m_Layer: 0
-  m_Name: black_square (2)
+  m_Name: VWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -635,7 +648,7 @@ GameObject:
   - component: {fileID: 1004822675}
   - component: {fileID: 1004822674}
   m_Layer: 0
-  m_Name: black_square
+  m_Name: HWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,7 +774,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1130633186}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 7160f685a546343268caf34f7eb8d097, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -849,10 +862,10 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 7160f685a546343268caf34f7eb8d097, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1130633191
 MonoBehaviour:
@@ -867,8 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  speedModifier: 1
-  hitCt: 0
+  maxSpeed: 35
   game_over: 1
 --- !u!1 &1504465786
 GameObject:
@@ -975,7 +987,7 @@ GameObject:
   - component: {fileID: 1599015136}
   - component: {fileID: 1599015135}
   m_Layer: 0
-  m_Name: black_square (3)
+  m_Name: VWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

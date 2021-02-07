@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Ricochet : MonoBehaviour
 {
 
     public Rigidbody2D rb;
-    public float speedModifier = 1.0f;
-    public int hitCt = 0;
+    //public float speedModifier = 1.0f;
+    //public int hitCt = 0;
+    public float maxSpeed = 35;
     public bool game_over = true;
-    Vector2 prevVelocity;
     Vector2 initialMovement;
     // Start is called before the first frame update
     void Start()
@@ -24,12 +25,17 @@ public class Ricochet : MonoBehaviour
         {
             initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             initialMovement.Normalize();
-            rb.AddForce(50 * initialMovement);
+            rb.AddForce(80 * initialMovement);
 
             game_over = false;
             Debug.Log("here we go!");
         }
-        prevVelocity = rb.velocity;
+
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
     }
 
     //activate when the ball hits a wall
@@ -38,10 +44,11 @@ public class Ricochet : MonoBehaviour
         //increase the speed of the ball after every x hits
         if (c.gameObject.name == "VWall" || c.gameObject.name == "HWall")
         {
+            /*
             if (hitCt == 5)
             {
                 rb.velocity *= new Vector2(speedModifier, speedModifier);
-                speedModifier *= 1.10f;
+                speedModifier *= 1.05f;
                 hitCt = 0;
                 Debug.Log("speed up!");
             }
@@ -49,15 +56,20 @@ public class Ricochet : MonoBehaviour
             {
                 hitCt += 1;
             }
+            */
 
-            //make sure all axis are not 0
-            if (rb.velocity.x == 0.0f)
+            //make sure velocity on either axis is not too small to prevent repeated bouncing in a straight line 
+            if (Mathf.Abs(rb.velocity.x) <= 0.1f)
             {
-                rb.velocity = new Vector2(2.0f, rb.velocity.y);
+                initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+                rb.velocity = initialMovement.normalized * rb.velocity.magnitude;
+
             }
-            if (rb.velocity.y == 0.0f)
+
+            if (Mathf.Abs(rb.velocity.y) <= 0.1f)
             {
-                rb.velocity = new Vector2(rb.velocity.x, 2.0f);
+                initialMovement = new Vector2(Random.Range(1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+                rb.velocity = initialMovement.normalized * rb.velocity.magnitude;
             }
         }
         //game over if the ball hits the blue circle while visible
