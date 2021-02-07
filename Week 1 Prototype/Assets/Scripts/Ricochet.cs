@@ -12,23 +12,45 @@ public class Ricochet : MonoBehaviour
     public float maxSpeed = 35;
     public bool game_over = true;
     Vector2 initialMovement;
+    public Transform randPos;
+
+    public GameObject player;
+    public DisableBlueCircle dbc;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        dbc = player.GetComponent<DisableBlueCircle>();
     }
 
+    //start the circle in a random position
+    void ToRandPos(){
+        Transform[] pos = randPos.GetComponentsInChildren<Transform>();
+        int p = Random.Range(0, pos.Length);
+        this.transform.position = pos[p].position;
+    }
 
     void Update()
     {
         if (game_over && Input.GetKeyDown("r"))
         {
+            //goto random point
+            ToRandPos();
+
             initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             initialMovement.Normalize();
             rb.AddForce(80 * initialMovement);
 
             game_over = false;
-            Debug.Log("here we go!");
+            Debug.Log("Game Start!");
+
+            //allow player to hide and reset score
+            dbc.score = 0;
+            dbc.canHide = true;
+            dbc.firstScreen = false;
+
         }
 
         if (rb.velocity.magnitude > maxSpeed)
@@ -72,12 +94,28 @@ public class Ricochet : MonoBehaviour
                 rb.velocity = initialMovement.normalized * rb.velocity.magnitude;
             }
         }
-        //game over if the ball hits the blue circle while visible
-        else if (c.gameObject.name == "blue_circle")
+    }
+
+    //game over if the ball hits the blue circle while visible
+    void OnTriggerEnter2D(Collider2D c){
+        
+        if (c.gameObject == player && dbc.visible)
         {
             rb.velocity = Vector2.zero;
             Debug.Log("Game over");
             game_over = true;
+            dbc.canHide = false;
+        }
+    }
+
+    //same as above but if player reactivates while red circle is in middle 
+    void OnTriggerStay2D(Collider2D c){
+        if (c.gameObject == player && dbc.visible)
+        {
+            rb.velocity = Vector2.zero;
+            Debug.Log("Game over");
+            game_over = true;
+            dbc.canHide = false;
         }
     }
 }
