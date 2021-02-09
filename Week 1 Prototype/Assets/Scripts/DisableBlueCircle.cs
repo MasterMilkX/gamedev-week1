@@ -39,7 +39,7 @@ public class DisableBlueCircle : MonoBehaviour
         }
 
         //show title screen ui
-        titleTxt.text = "[Game Name]";
+        titleTxt.text = "Flew Thru Blue";
         statescreen.SetActive(true);
         firstScreen = true;
     }
