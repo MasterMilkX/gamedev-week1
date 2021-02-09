@@ -9,7 +9,7 @@ public class Ricochet : MonoBehaviour
     public Rigidbody2D rb;
     //public float speedModifier = 1.0f;
     //public int hitCt = 0;
-    public float maxSpeed = 35;
+    public float maxSpeed = 25;
     public bool game_over = true;
     Vector2 initialMovement;
     public Transform randPos;
@@ -34,28 +34,30 @@ public class Ricochet : MonoBehaviour
 
     void Update()
     {
-        if (game_over && Input.GetKeyDown("r"))
+        if (game_over && Input.GetKeyDown("space"))
         {
             //goto random point
             ToRandPos();
-
-            initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-            initialMovement.Normalize();
-            rb.AddForce(80 * initialMovement);
-
-            game_over = false;
-            Debug.Log("Game Start!");
 
             //allow player to hide and reset score
             dbc.score = 0;
             dbc.canHide = true;
             dbc.firstScreen = false;
 
+            initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            initialMovement.Normalize();
+            rb.AddForce(80 * initialMovement);
+
+            game_over = false;
+            //Debug.Log("Game Start!");
+
+
         }
 
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
+            Debug.Log("Mach speed");
         }
 
     }
@@ -81,14 +83,14 @@ public class Ricochet : MonoBehaviour
             */
 
             //make sure velocity on either axis is not too small to prevent repeated bouncing in a straight line 
-            if (Mathf.Abs(rb.velocity.x) <= 0.1f)
+            if (Mathf.Abs(rb.velocity.x) <= 0.5f)
             {
                 initialMovement = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
                 rb.velocity = initialMovement.normalized * rb.velocity.magnitude;
 
             }
 
-            if (Mathf.Abs(rb.velocity.y) <= 0.1f)
+            if (Mathf.Abs(rb.velocity.y) <= 0.5f)
             {
                 initialMovement = new Vector2(Random.Range(1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
                 rb.velocity = initialMovement.normalized * rb.velocity.magnitude;
@@ -102,7 +104,7 @@ public class Ricochet : MonoBehaviour
         if (c.gameObject == player && dbc.visible)
         {
             rb.velocity = Vector2.zero;
-            Debug.Log("Game over");
+            //Debug.Log("Game over");
             game_over = true;
             dbc.canHide = false;
         }
@@ -113,7 +115,7 @@ public class Ricochet : MonoBehaviour
         if (c.gameObject == player && dbc.visible)
         {
             rb.velocity = Vector2.zero;
-            Debug.Log("Game over");
+            //Debug.Log("Game over");
             game_over = true;
             dbc.canHide = false;
         }

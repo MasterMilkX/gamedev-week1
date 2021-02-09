@@ -27,6 +27,7 @@ public class DisableBlueCircle : MonoBehaviour
         score = 0;
 
         Debug.Log(PlayerPrefs.GetInt("highscore"));
+        statescreen.SetActive(true);
 
         //set high score
         if(PlayerPrefs.HasKey("highscore")){
